@@ -1,9 +1,23 @@
+
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class TodoService {
     private final String FILE_NAME = "todolist.txt";
 
     // 리스트 생성
     public void addTodo(int id, String content) {
-        // 임시생성. 리스트 생성 후 파일에 저장
+
+        TodoItem newItem = new TodoItem(id, content, false);
+
+        // 파일에 저장
+        try (FileWriter fw = new FileWriter(FILE_NAME, true)) {
+            // 파일에 저장할 형식으로 변환
+            fw.write(newItem.toFileFormat() + "\n");
+            System.out.println("리스트에 추가 :  " + newItem);
+        } catch (IOException e) {
+            System.out.println("오류 발생 : " + e.getMessage());
+        }
     }
 
     // 리스트 삭제

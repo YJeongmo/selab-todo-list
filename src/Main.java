@@ -4,16 +4,22 @@ public class Main {
         // 객체 생성
         TodoService service = new TodoService();
         // 리스트 생성
-        service.addTodo(id, content);
+        service.addTodo(1, "자바 복습하기");
+        service.addTodo(2, "객체지향 이해하기");
+
         // 리스트 삭제
-        service.deleteTodo(id);
+        // service.deleteTodo(id);
+
         // 리스트 수정
-        service.editTodo(id, content);
+        // service.editTodo(id, content);
+
         // 수행 여부 체크
-        service.isDone(id, isCompleted);
+        // service.isDone(id, isCompleted);
+
         // 전체 조회
-        service.printAll();
+        // service.printAll();
+
         // 단건 조회
-        service.printOne(id);
+        // service.printOne(id);
     }
 }
