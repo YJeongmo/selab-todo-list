@@ -4,9 +4,7 @@ public class Main {
         // 객체 생성
         TodoService service = new TodoService();
         // 리스트 생성
-        service.addTodo(1, "자바 복습하기");
-        service.addTodo(2, "객체지향 이해하기");
-
+        service.addTodo("ID값 자동 부여 테스트");
         // 리스트 삭제
         // service.deleteTodo(id);
 

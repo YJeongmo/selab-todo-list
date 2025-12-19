@@ -29,6 +29,12 @@ public class TodoItem {
         return id + "," + content + "," + isCompleted;
     }
 
+    // ID 추출하는 매서드
+    public static int getIdFromLine(String line) {
+        String[] parts = line.split(",");
+        return Integer.parseInt(parts[0]);
+    }
+
     // Getter
     public int getId(){return id;}
     public String getContent(){return content;}

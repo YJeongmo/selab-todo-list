@@ -1,14 +1,37 @@
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class TodoService {
     private final String FILE_NAME = "todolist.txt";
 
-    // 리스트 생성
-    public void addTodo(int id, String content) {
+    // ID 자동 부여
+    private int getNextId() {
+        int maxId = 0;
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                // 한 줄씩 읽으며 ID값 증가
+                int currentId = TodoItem.getIdFromLine(line);
+                if (currentId > maxId) { // 끝에 도달해서 새로 부여할 ID값
+                    maxId = currentId;
+                }
+            }
+        } catch (IOException e) {
+            return 1;
+        }
+        return maxId + 1;
+    }
 
-        TodoItem newItem = new TodoItem(id, content, false);
+    // 리스트 생성
+    public void addTodo(String content) {
+
+        // id를 직접 입력하는것이 아닌 자동부여 필요
+        int nextId = getNextId();
+
+        TodoItem newItem = new TodoItem(nextId, content, false);
 
         // 파일에 저장
         try (FileWriter fw = new FileWriter(FILE_NAME, true)) {
