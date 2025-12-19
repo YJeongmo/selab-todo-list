@@ -1,17 +1,19 @@
-// Press ⇧ twice to open the Search Everywhere dialog and type `show whitespaces`,
-// then press Enter. You can now see whitespace characters in your code.
+
 public class Main {
     public static void main(String[] args) {
-        // Press ⌥⏎ with your caret at the highlighted text to see how
-        // IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
-
-        // Press ⌃R or click the green arrow button in the gutter to run the code.
-        for (int i = 1; i <= 5; i++) {
-
-            // Press ⌃D to start debugging your code. We have set one breakpoint
-            // for you, but you can always add more by pressing ⌘F8.
-            System.out.println("i = " + i);
-        }
+        // 객체 생성
+        TodoService service = new TodoService();
+        // 리스트 생성
+        service.addTodo(id, content);
+        // 리스트 삭제
+        service.deleteTodo(id);
+        // 리스트 수정
+        service.editTodo(id, content);
+        // 수행 여부 체크
+        service.isDone(id, isCompleted);
+        // 전체 조회
+        service.printAll();
+        // 단건 조회
+        service.printOne(id);
     }
 }
