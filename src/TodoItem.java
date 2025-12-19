@@ -29,10 +29,19 @@ public class TodoItem {
         return id + "," + content + "," + isCompleted;
     }
 
-    // ID 추출하는 매서드
+    // ID값을 추출하는 매서드
     public static int getIdFromLine(String line) {
         String[] parts = line.split(",");
         return Integer.parseInt(parts[0]);
+    }
+
+    // txt파일의 각 줄을 하나의 리스트 객체로 생성
+    public static TodoItem fromFileFormat(String line) {
+        String[] parts = line.split(",");
+        int id = Integer.parseInt(parts[0]);
+        String content = parts[1];
+        boolean isCompleted = Boolean.parseBoolean(parts[2]);
+        return new TodoItem(id, content, isCompleted);
     }
 
     // Getter

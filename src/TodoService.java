@@ -4,25 +4,35 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TodoService {
     private final String FILE_NAME = "todolist.txt";
 
-    // ID 자동 부여
-    private int getNextId() {
-        int maxId = 0;
+    //  파일의 내용을 한 줄씩 객체로 리스트에 저장
+    private List<TodoItem> loadAll() {
+        List<TodoItem> list = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                // 한 줄씩 읽으며 ID값 증가
-                int currentId = TodoItem.getIdFromLine(line);
-                if (currentId > maxId) { // 끝에 도달해서 새로 부여할 ID값
-                    maxId = currentId;
-                }
+                // 한 줄씩 객체로 변경 후 리스트에 추가
+                list.add(TodoItem.fromFileFormat(line));
             }
         } catch (IOException e) {
-            return 1;
+            // 파일이 없으면 빈 리스트
         }
-        return maxId + 1;
+        return list;
+    }
+
+    // ID 자동 부여
+    private int getNextId() {
+        List<TodoItem> list = loadAll();
+
+        // 빈 리스트 -> 1번 부여
+        if (list.isEmpty()) return 1;
+        // 리스트의 마지막 항목 + 1 부여
+        return list.get(list.size() - 1).getId() + 1;
     }
 
     // 리스트 생성
@@ -60,7 +70,14 @@ public class TodoService {
 
     // 전체 조회
     public void printAll() {
-        // 임시생성. txt파일 전체 출력
+        List<TodoItem> list = loadAll();
+        if (list.isEmpty()) {
+            System.out.println("목록이 비어있습니다.");
+            return;
+        }
+        for (TodoItem item : list) {
+            System.out.println(item);
+        }
     }
 
     // 단건 조회
