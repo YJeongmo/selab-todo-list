@@ -55,7 +55,31 @@ public class TodoService {
 
     // 리스트 삭제
     public void deleteTodo(int id) {
-        // 임시생성. 파일읽기 -> 해당 id값의 데이터 삭제 -> 덮어쓰기
+
+        List<TodoItem> list = loadAll();
+
+        // ID가 일치하는 리스트 삭제
+        boolean removed = list.removeIf(item -> item.getId() == id);
+
+        if (removed) {
+            // 지운 데이터를 제외한 전체 데이터 덮어쓰기
+            saveAll(list);
+            System.out.println(id + "번 리스트 삭제 완료");
+        } else {
+            System.out.println("해당 ID의 리스트를 찾을 수 없습니다.");
+        }
+    }
+
+    // 지운 데이터를 제외한 리스트를 파일에 덮어쓰기
+    private void saveAll(List<TodoItem> list) {
+
+        try (FileWriter fw = new FileWriter(FILE_NAME, false)) {
+            for (TodoItem item : list) {
+                fw.write(item.toFileFormat() + "\n");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // 리스트 수정

@@ -5,8 +5,9 @@ public class Main {
         TodoService service = new TodoService();
         // 리스트 생성
         service.addTodo("ID값 자동 부여 테스트2");
+
         // 리스트 삭제
-        // service.deleteTodo(id);
+        service.deleteTodo(1);
 
         // 리스트 수정
         // service.editTodo(id, content);
