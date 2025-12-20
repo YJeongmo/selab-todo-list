@@ -25,6 +25,7 @@ public class TodoService {
         return list;
     }
 
+
     // ID 자동 부여
     private int getNextId() {
         List<TodoItem> list = loadAll();
@@ -34,6 +35,7 @@ public class TodoService {
         // 리스트의 마지막 항목 + 1 부여
         return list.get(list.size() - 1).getId() + 1;
     }
+
 
     // 리스트 생성
     public void addTodo(String content) {
@@ -53,6 +55,7 @@ public class TodoService {
         }
     }
 
+
     // 리스트 삭제
     public void deleteTodo(int id) {
 
@@ -70,6 +73,7 @@ public class TodoService {
         }
     }
 
+
     // 지운 데이터를 제외한 리스트를 파일에 덮어쓰기
     private void saveAll(List<TodoItem> list) {
 
@@ -82,15 +86,54 @@ public class TodoService {
         }
     }
 
+
     // 리스트 수정
     public void editTodo(int id, String newContent) {
-        // 임시생성. 파일읽기 -> 해당 id값의 데이터 수정 -> 덮어쓰기
+
+        List<TodoItem> list = loadAll();
+        boolean isUpdated = false;
+
+        for (TodoItem item : list) {
+            if (item.getId() == id) {
+                // 해당 id의 리스트 내용 변경
+                item.setContent(newContent);
+                isUpdated = true;
+                break;
+            }
+        }
+
+        if (isUpdated) {
+            saveAll(list);
+            System.out.println(id + "번 리스트 내용 수정 완료");
+        } else {
+            System.out.println("해당 ID의 리스트를 찾을 수 없습니다");
+        }
     }
+
 
     // 수행 여부 체크
     public void isDone(int id, boolean isCompleted) {
-        // 임시생성. 해당 id값의 boolean 데이터값 변경
+
+        List<TodoItem> list = loadAll();
+        boolean isUpdated = false;
+
+        for (TodoItem item : list) {
+            if (item.getId() == id) {
+                // 해당 id의 리스트 상태 벼경
+                item.setCompleted(isCompleted);
+                isUpdated = true;
+                break;
+            }
+        }
+
+        if (isUpdated) {
+            saveAll(list);
+            System.out.println(id + "번 리스트 상태 수정 완료");
+        } else {
+            System.out.println("해당 ID의 리스트를 찾을 수 없습니다");
+        }
     }
+
 
     // 전체 조회
     public void printAll() {
@@ -103,6 +146,7 @@ public class TodoService {
             System.out.println(item);
         }
     }
+
 
     // 단건 조회
     public void printOne(int id) {
