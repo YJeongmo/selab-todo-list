@@ -150,6 +150,22 @@ public class TodoService {
 
     // 단건 조회
     public void printOne(int id) {
-        // 임시생성. 해당 id값의 데이터 출력
+
+        List<TodoItem> list = loadAll();
+
+        TodoItem foundItem = null;
+        for (TodoItem item : list) {
+            if (item.getId() == id) {
+                foundItem = item;
+                break;
+            }
+        }
+
+        if (foundItem != null) {
+            System.out.println("===== 단건 조회 결과 =====");
+            System.out.println(foundItem);
+        } else {
+            System.out.println("번 리스트가 존재하지 않습니다.");
+        }
     }
 }
